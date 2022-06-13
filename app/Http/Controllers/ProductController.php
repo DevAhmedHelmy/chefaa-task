@@ -33,7 +33,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $pharmacies = $this->productService->getPharmacies();
+        return view('products.create', [
+            'pharmacies' => $pharmacies,
+        ]);
     }
 
     /**

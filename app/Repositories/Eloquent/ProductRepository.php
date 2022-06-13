@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Models\Pharmacy;
 use App\Repositories\ProductRepositoryInterface;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -12,7 +13,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function getPharmacies()
     {
-        return "getPharmacies";
+        return  Pharmacy::all();
     }
     public function getById($id)
     {

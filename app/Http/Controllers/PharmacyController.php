@@ -33,7 +33,7 @@ class PharmacyController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

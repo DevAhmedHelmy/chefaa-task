@@ -19,7 +19,7 @@ class ProductService
 
     public function getPharmacies()
     {
-        return "getPharmacies";
+        return $this->productRepository->getPharmacies();
     }
 
     public function getById($id)
