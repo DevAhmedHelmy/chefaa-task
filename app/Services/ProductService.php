@@ -14,7 +14,7 @@ class ProductService
 
     public function getAll()
     {
-        return "getAll";
+        return $this->productRepository->getAll();
     }
 
     public function getPharmacies()
@@ -24,21 +24,25 @@ class ProductService
 
     public function getById($id)
     {
-        return "getById";
+        return $this->productRepository->getById($id);
     }
 
     public function create($data)
     {
-        return "create";
+        return $this->productRepository->create($data);
     }
 
     public function update($id, $data)
     {
-        return "update";
+        return $this->productRepository->update($id, $data);
     }
 
     public function delete($id)
     {
-        return "delete";
+        return $this->productRepository->delete($id);
+    }
+    public function search($request)
+    {
+        return $this->productRepository->search($request);
     }
 }

@@ -12,27 +12,36 @@ class PharmacyService
     }
     public function getAll()
     {
-        return "getAll";
+        return $this->pharmacyRepository->getAll();
+    }
+
+    public function getProducts()
+    {
+        return $this->pharmacyRepository->getProducts();
     }
 
     public function getById($id)
     {
-        return "getById";
+        return $this->pharmacyRepository->getById($id);
     }
 
     public function create($data)
     {
-        return "create";
+        return $this->pharmacyRepository->create($data);
     }
 
     public function update($id, $data)
     {
-        return "update";
+        return $this->pharmacyRepository->update($id, $data);
     }
 
     public function delete($id)
     {
-        return "delete";
+        return $this->pharmacyRepository->delete($id);
+    }
+    public function search($request)
+    {
+        return $this->pharmacyRepository->search($request);
     }
 
 }

@@ -5,8 +5,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use App\Models\Pharmacy;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,20 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $products = Product::factory(50000)->make([
+        $products = Product::factory(50)->make([
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString(),
         ]);
-        $chunkProduct = $products->chunk(5000);
+        $chunkProduct = $products->chunk(10);
         foreach ($chunkProduct as $chunk) {
             Product::insert($chunk->toArray());
         }
 
-        $pharmacies = Pharmacy::factory(20000)->make([
+        $pharmacies = Pharmacy::factory(20)->make([
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString(),
         ]);
-        $chunkPharmacy = $pharmacies->chunk(1000);
+        $chunkPharmacy = $pharmacies->chunk(10);
         foreach ($chunkPharmacy as $chunk) {
             Pharmacy::insert($chunk->toArray());
         }

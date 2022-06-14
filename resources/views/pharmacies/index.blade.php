@@ -28,12 +28,15 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('pharmacies.edit', $pharmacy->id) }}"
-                                            class="btn btn-primary">Edit</a>
+                                            class="btn btn-primary btn-sm">Edit</a>
+                                             <a href="{{ route('pharmacies.show', $pharmacy->id) }}">
+                                                <button class="btn btn-info btn-sm">Show</button>
+                                            </a>
                                         <form action="{{ route('pharmacies.destroy', $pharmacy->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                         </form>
                                     </td>
 

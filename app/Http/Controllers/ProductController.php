@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
+use App\Http\Requests\ProductRequest;
+
 
 class ProductController extends Controller
 {
@@ -22,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.index', [
-            'products' => Product::paginate(),
+            'products' => $this->productService->getAll()
         ]);
     }
 
@@ -45,9 +46,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $this->productService->create($request);
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -56,9 +58,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = $this->productService->getById($id);
+        return view('products.show', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -67,9 +72,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $pharmacies = $this->productService->getPharmacies();
+        $product = $this->productService->getById($id);
+        return view('products.edit', [
+            'pharmacies' => $pharmacies,
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -79,9 +89,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $this->productService->update($id, $request);
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -90,8 +101,15 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $this->productService->delete($id);
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $products = $this->productService->search($request);
+        return response()->json(['data' => $products]);
     }
 }

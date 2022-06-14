@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use App\Services\PharmacyService;
+use App\Http\Requests\PharmacyRequest;
 
 class PharmacyController extends Controller
 {
@@ -22,7 +22,7 @@ class PharmacyController extends Controller
     public function index()
     {
         return view('pharmacies.index', [
-            'pharmacies' => Pharmacy::paginate(),
+            'pharmacies' => $this->pharmacyService->getAll()
         ]);
     }
 
@@ -33,6 +33,9 @@ class PharmacyController extends Controller
      */
     public function create()
     {
+        return view('pharmacies.create', [
+            'products' => $this->pharmacyService->getProducts(),
+        ]);
 
     }
 
@@ -42,9 +45,10 @@ class PharmacyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PharmacyRequest $request)
     {
-        //
+        $this->pharmacyService->create($request);
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacy created successfully');
     }
 
     /**
@@ -53,9 +57,13 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function show(Pharmacy $pharmacy)
+    public function show($id)
     {
-        //
+        $pharmacy = $this->pharmacyService->getById($id);
+        return view('pharmacies.show', [
+            'pharmacy' => $pharmacy,
+        ]);
+
     }
 
     /**
@@ -64,9 +72,13 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pharmacy $pharmacy)
+    public function edit($id)
     {
-        //
+        $pharmacy = $this->pharmacyService->getById($id);
+        return view('pharmacies.edit', [
+            'pharmacy' => $pharmacy,
+            'products' => $this->pharmacyService->getProducts(),
+        ]);
     }
 
     /**
@@ -76,9 +88,11 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pharmacy $pharmacy)
+    public function update(PharmacyRequest $request, $id)
     {
-        //
+        $this->pharmacyService->update($id, $request);
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacy updated successfully');
+
     }
 
     /**
@@ -87,8 +101,15 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pharmacy $pharmacy)
+    public function destroy($id)
     {
-        //
+        $this->pharmacyService->delete($id);
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacy deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $products = $this->pharmacyService->search($request);
+        return response()->json(['data' => $products]);
     }
 }

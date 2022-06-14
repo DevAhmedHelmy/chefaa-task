@@ -13,6 +13,6 @@ class Product extends Model
 
     public function pharmacies()
     {
-        return $this->belongsToMany(Pharmacy::class, 'pharmacy_product');
+        return $this->belongsToMany(Pharmacy::class, 'pharmacy_product')->withPivot('quantity','price');
     }
 }

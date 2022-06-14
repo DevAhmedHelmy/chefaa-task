@@ -17,6 +17,8 @@ use App\Http\Controllers\PharmacyController;
 Route::get('/', function () {
     return redirect('/products');
 });
-
+Route::get('products/search',[ProductController::class,'search'])->name('products.search');
 Route::resource('/products', ProductController::class);
+
+Route::get('pharmacies/search', [PharmacyController::class, 'search'])->name('pharmacies.search');
 Route::resource('/pharmacies', PharmacyController::class);
