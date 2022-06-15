@@ -36,7 +36,6 @@ class PharmacyController extends Controller
         return view('pharmacies.create', [
             'products' => $this->pharmacyService->getProducts(),
         ]);
-
     }
 
     /**
@@ -63,7 +62,6 @@ class PharmacyController extends Controller
         return view('pharmacies.show', [
             'pharmacy' => $pharmacy,
         ]);
-
     }
 
     /**
@@ -92,7 +90,6 @@ class PharmacyController extends Controller
     {
         $this->pharmacyService->update($id, $request);
         return redirect()->route('pharmacies.index')->with('success', 'Pharmacy updated successfully');
-
     }
 
     /**

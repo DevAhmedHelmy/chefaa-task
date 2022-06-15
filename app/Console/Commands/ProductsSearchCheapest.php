@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
-use App\Models\Pharmacy;
 use Illuminate\Console\Command;
-use App\Models\PharmacyProducts;
 use Illuminate\Support\Facades\DB;
 
 class ProductsSearchCheapest extends Command

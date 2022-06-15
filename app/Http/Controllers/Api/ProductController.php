@@ -6,6 +6,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -22,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return ProductResource::collection($this->productService->getAll());
     }
 
 
@@ -33,9 +35,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $this->productService->create($request);
+        return response()->json(['success' => 'Product created successfully']);
     }
 
     /**
@@ -44,9 +47,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        return new ProductResource($this->productService->getById($id));
     }
 
 
@@ -58,9 +61,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $this->productService->update($id,$request );
+        return response()->json(['success' => 'Product updated successfully']);
     }
 
     /**
@@ -69,8 +73,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $this->productService->delete($id);
+        return response()->json(['message' => 'Product deleted successfully']);
     }
 }

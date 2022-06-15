@@ -61,7 +61,7 @@ class PharmacyRepository implements PharmacyRepositoryInterface
 
     public function search($request)
     {
-        return $this->pharmacy->select("id", "title")->where("title", "LIKE", "%{$request->search}%")->get();
+        return $this->pharmacy->select("id", "name")->where("name", "LIKE", "%{$request->search}%")->get();
     }
 
     private function customSync($data, $pharmacy_id)

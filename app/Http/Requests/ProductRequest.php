@@ -27,9 +27,10 @@ class ProductRequest extends FormRequest
             'title'=>'required|string|max:255',
             'description'=>'required|string|max:255',
             'image'=>'nullable',
-            'prices'=>'required|array',
-            'pharmacies'=>'required|array',
-            'pharmacies.*'=>'required|exists:pharmacies,id',
+            'prices'=>'nullable|array',
+            'pharmacies'=>'nullable|array',
+            'pharmacies.*'=>'nullable|exists:pharmacies,id',
+            'quantities'=> 'nullable|array',
         ];
     }
 }

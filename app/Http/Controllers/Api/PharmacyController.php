@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Pharmacy;
-use Illuminate\Http\Request;
+
 use App\Services\PharmacyService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PharmacyRequest;
+use App\Http\Resources\PharmacyResource;
 
 class PharmacyController extends Controller
 {
@@ -22,7 +23,7 @@ class PharmacyController extends Controller
      */
     public function index()
     {
-
+        return PharmacyResource::collection($this->pharmacyService->getAll());
     }
 
 
@@ -32,9 +33,10 @@ class PharmacyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PharmacyRequest $request)
     {
-        //
+        $this->pharmacyService->create($request);
+        return response()->json(['success' => 'Pharmacy created successfully']);
     }
 
     /**
@@ -43,9 +45,10 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function show(Pharmacy $pharmacy)
+    public function show($id)
     {
-        //
+        return new PharmacyResource($this->pharmacyService->getById($id));
+
     }
 
 
@@ -57,9 +60,10 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pharmacy $pharmacy)
+    public function update(PharmacyRequest $request, $id)
     {
-        //
+        $this->pharmacyService->update($id,$request);
+        return response()->json(['success' => 'Pharmacy updated successfully']);
     }
 
     /**
@@ -68,8 +72,9 @@ class PharmacyController extends Controller
      * @param  \App\Models\Pharmacy  $pharmacy
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pharmacy $pharmacy)
+    public function destroy($id)
     {
-        //
+        $this->pharmacyService->delete($id);
+        return response()->json(['success' => 'Pharmacy deleted successfully']);
     }
 }
