@@ -17,7 +17,7 @@ cp .env.example .env
 php artisan key:generate 
 
 #DB Migration
-php artisan make:migrate
+php artisan migrate
 
 #DB Seeder
 php artisan db:seed
