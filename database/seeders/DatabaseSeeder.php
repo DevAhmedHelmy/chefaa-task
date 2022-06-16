@@ -16,20 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $products = Product::factory(50)->make([
+        $products = Product::factory(50000)->make([
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString(),
         ]);
-        $chunkProduct = $products->chunk(10);
+        $chunkProduct = $products->chunk(5000);
         foreach ($chunkProduct as $chunk) {
             Product::insert($chunk->toArray());
         }
 
-        $pharmacies = Pharmacy::factory(20)->make([
+        $pharmacies = Pharmacy::factory(20000)->make([
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString(),
         ]);
-        $chunkPharmacy = $pharmacies->chunk(10);
+        $chunkPharmacy = $pharmacies->chunk(1000);
         foreach ($chunkPharmacy as $chunk) {
             Pharmacy::insert($chunk->toArray());
         }
