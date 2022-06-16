@@ -16,10 +16,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 
-# build CSS and JS assets
-npm run dev
-# or, if you prefer minified files
-npm run prod
+ 
 
  
 
